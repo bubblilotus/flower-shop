@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CartServiceService } from '../services/cart-service.service';
@@ -9,12 +9,19 @@ import { CartServiceService } from '../services/cart-service.service';
   styleUrls: ['./topbar.component.css']
 })
 export class TopbarComponent implements OnInit{
+  isSticky: boolean = false;
   opened = false;
   searchOpened = false;
   searchMode = false;
   value = "";
   path = '/assets/images/icons';
   cartCount = 0;
+  menuPosition: number = 0;
+  @ViewChild('stickyMenu')
+  menuElement!: ElementRef;
+
+  sticky: boolean = false;
+  elementPosition: any;
 
   constructor(
     private domSanitizer: DomSanitizer,
@@ -32,7 +39,19 @@ export class TopbarComponent implements OnInit{
       }
     );
   }
+  ngAfterViewInit(){
+    this.elementPosition = this.menuElement.nativeElement;
+  }
   private setPath(url: string): SafeResourceUrl {
     return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
   }
+  @HostListener('window:scroll', ['$event'])
+    handleScroll(){
+        const windowScroll = window.pageYOffset;
+        if(windowScroll >= this.menuPosition + 10){
+            this.isSticky = true;
+        } else {
+            this.isSticky = false;
+        }
+    }
 }

@@ -17,7 +17,7 @@
 }
 
 .mat-toolbar {
-    height: 20% !important;
+    height: 4em !important;
     position: relative;
     padding: 0 !important;
     display: flex;
@@ -25,6 +25,8 @@
     align-items: center;
     background: transparent !important;
     color: white !important;
+    transition: background-color .2s;
+    transition-delay: -.2s;
 }
 
 .mat-sidenav {
@@ -35,6 +37,7 @@
     align-items: center;
     justify-content: center;
     padding: 1em;
+    z-index: 10;
 }
 
 .sidenav-close {
@@ -108,6 +111,13 @@ button.account-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-b
     padding: .5em;
     padding-top: 1em;
 }
+.search-nav{
+    height: 100%;
+}
+.search-line{
+    display: flex;
+    justify-content: space-around;
+}
 
 .mdc-text-field--filled:not(.mdc-text-field--disabled),
 .mat-mdc-form-field-focus-overlay {
@@ -145,6 +155,7 @@ mat-form-field{
 .cart-nav{
     width: 100%;
     height: 100%;
+    padding: 0 1em
 }
 .cart-header{
     width: 100%;
@@ -157,5 +168,29 @@ mat-form-field{
     height: 5em;
     background-color: white;
     z-index: 6;
+    padding: 0 1em;
+}
+.sticky{
+    position: fixed;
+    top: 0;
+    overflow: hidden;
+    z-index: 10;
+    width: 100%;
+    background-color: white !important;
+    z-index: 4;
+    color: black !important;
+    height: 4em !important;
+}
+.sticky a:active,.sticky a:focus,.sticky a:visited{
+    color: black;
+}
+
+.mat-icon.black-icon svg path{
+    color: black;
+    stroke: black;
+    stroke-width: 2;
+}
+.mat-icon.notranslate.mat-badge.white-icon.mat-badge-warn.mat-icon-no-color.mat-badge-overlap.mat-badge-above.mat-badge-after.mat-badge-medium.black-icon path{
+    stroke: black;
 }
 
