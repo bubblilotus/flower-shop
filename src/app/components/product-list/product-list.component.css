@@ -1,0 +1,28 @@
+mat-card{
+    width: calc(90%/2);
+    --mdc-elevated-card-container-elevation: none;
+}
+mat-card-content{
+    padding: 1.25em 0;
+}
+.title{
+    text-align: center;
+    font-weight: 600;
+    font-size: .90em;
+    text-transform: uppercase;
+}
+.price{
+    text-align: center;
+}
+.image{
+    /* background-image: url("/assets/images/slides/bouquet.jpg");  */
+    height: 20vh;
+    width: 100%;
+    /* background-size: cover;
+    background-repeat: no-repeat; */
+}
+mat-card-actions{
+    display: flex;
+    justify-content: center;
+    display: none;
+}

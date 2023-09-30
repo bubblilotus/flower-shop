@@ -1,0 +1,37 @@
+<app-topbar></app-topbar>
+<div class="product-detail-wrapper">
+  <mat-card class="detail-card">
+    <mat-card-header class="title">{{product.name}}</mat-card-header>
+    <mat-card-content class="card-section">
+        <div class="description">
+          {{product.description}}
+        </div>
+        <div class="price">{{product.unitPrice | currency:'USD'}}</div>
+    </mat-card-content>
+    <mat-card-actions class="card-section">
+      <button (click) = "addToCart(product)"
+      mat-raised-button>ADD TO CART</button>
+    </mat-card-actions>
+    <mat-accordion>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              composition
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>{{product.composition}}</p>
+        </mat-expansion-panel>
+        <mat-expansion-panel (opened)="panelOpenState = true"
+                             (closed)="panelOpenState = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Language of the flowers
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <p>{{product.meaning}}</p>
+        </mat-expansion-panel>
+      </mat-accordion>
+</mat-card>
+</div>
+

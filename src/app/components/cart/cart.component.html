@@ -1,0 +1,36 @@
+<div *ngFor="let item of cartItems" class="cart-item">
+    <img src={{item.imageUrl}} alt="" class="item-image">
+    <div class="item-right">
+        <div class="item-details">
+            <div class="item-description">{{item.name}}</div>
+            <div class="price">{{item.unitPrice}}</div>
+        </div>
+        <div class="item-actions">
+            <div class="quantity-adjust">
+                <div class="quantity-button">
+                    <button mat-icon-button (click)="incrementQuantity(item)">
+                        <mat-icon>+</mat-icon>
+                    </button>
+                </div>
+
+                <div class="quantity">
+                    {{ item.quantity }}
+                </div>
+
+                <div class="quantity-button">
+                    <button mat-icon-button (click)="decrementQuantity(item)">
+                        <mat-icon>–</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <div class="delete">
+                <button mat-button class="delete-button">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="total"><div>Total</div> <div>{{totalPrice}}</div></div>
+<div class="gift-message">message box here</div>
+<div class="cart-action">
+    <button mat-flat-button>proced to payment</button>
+</div>
