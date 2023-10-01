@@ -12,6 +12,8 @@ export class CartServiceService {
   totalPrice: Subject<number> = new BehaviorSubject<number>(0);
   totalQuantity: Subject<number> = new BehaviorSubject<number>(0);
 
+  
+
   constructor() { }
 
   addToCart(theCartItem: CartItem) {

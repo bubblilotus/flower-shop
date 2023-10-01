@@ -21,6 +21,7 @@ import { TopbarComponent } from './topbar/topbar.component';
 import { HomeComponent } from './components/home/home.component';
 import {MatBadgeModule} from '@angular/material/badge';
 import { CartComponent } from './components/cart/cart.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -47,7 +48,8 @@ import { CartComponent } from './components/cart/cart.component';
     MatInputModule,
     MatCardModule,
     MatExpansionModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

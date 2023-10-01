@@ -1,6 +1,6 @@
 <mat-sidenav [(opened)]="opened">
   <div class="sidenav-close">
-    <button (click)="opened = !opened" mat-icon-button [disableRipple]="true" class="close-button" aria-label="close menu button">
+    <button (click)="opened = !opened" mat-icon-button class="close-button" aria-label="close menu button">
       <mat-icon>close</mat-icon>
     </button>
   </div>
@@ -67,7 +67,7 @@
 </mat-sidenav>
 
 <div class="tophalf">
-  <div class="bg-image"></div>
+  <div class="bg-image" [style.background-image]="'url(' + image + ')'"></div>
   <mat-toolbar #stickyMenu
   [class.sticky] = "isSticky"
   >

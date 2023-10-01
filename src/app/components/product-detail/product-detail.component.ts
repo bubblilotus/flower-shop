@@ -11,7 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit{
-  product: any;
+  product: Product = new Product();
   panelOpenState = false;
   constructor(private productService: ProductService, 
     private cartService: CartServiceService,
@@ -25,13 +25,13 @@ export class ProductDetailComponent implements OnInit{
      // get the "id" param string. convert string to a number using the "+" symbol
      const productId: number = +this.route.snapshot.paramMap.get('id')!;
 
-     let prod = this.productService.getProduct(productId);
-     if(prod != undefined){
-      this.product = prod;
-     }
-     else{
-      this.router.navigateByUrl("home");
-     }
+     this.productService.getProduct(productId).subscribe(
+      data => {
+        this.product = data;
+        this.productService.imageEmitter.next(this.product.imageUrl);
+        console.log(data);
+      }
+    )
   }
   addToCart(product: Product){
     console.log(`Adding to cart: ${product.name}, ${product.unitPrice}`);

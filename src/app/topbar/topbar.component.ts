@@ -1,7 +1,9 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CartServiceService } from '../services/cart-service.service';
+import { Observable, Subject } from 'rxjs';
+import { ProductService } from '../services/product.service';
 
 @Component({
   selector: 'app-topbar',
@@ -20,12 +22,14 @@ export class TopbarComponent implements OnInit{
   @ViewChild('stickyMenu')
   menuElement!: ElementRef;
 
+image: any = "/assets/images/slides/bouquet.jpg";
   sticky: boolean = false;
   elementPosition: any;
-
+ 
   constructor(
     private domSanitizer: DomSanitizer,
-    public matIconRegistry: MatIconRegistry, private cartService: CartServiceService) {
+    public matIconRegistry: MatIconRegistry, private cartService: CartServiceService,
+    private productService: ProductService) {
     this.matIconRegistry
       .addSvgIcon('search', this.setPath(`${this.path}/search.svg`))
       .addSvgIcon('person', this.setPath(`${this.path}/person.svg`))
@@ -38,6 +42,13 @@ export class TopbarComponent implements OnInit{
         this.cartCount = data;
       }
     );
+    this.productService.imageEmitter.subscribe(
+      (data) => {
+        this.image = data;
+        console.log(this.image);
+      }
+    );
+    
   }
   ngAfterViewInit(){
     this.elementPosition = this.menuElement.nativeElement;
