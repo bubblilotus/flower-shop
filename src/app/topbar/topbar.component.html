@@ -4,34 +4,7 @@
       <mat-icon>close</mat-icon>
     </button>
   </div>
-  <div class="sidenav-item sidenav-heading">
-    <span>Bouquets for every occasion.</span>
-  </div>
-  <div class="sidenav-item"><span>Birthday</span>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-  </div>
-  <div class="sidenav-item"><span>Lover</span>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-  </div>
-  <div class="sidenav-item"><span>Gratitude</span>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-  </div>
-  <div class="sidenav-item"><span>Get Well</span>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-  </div>
-  <div class="sidenav-item"><span>New Beginnings</span>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-  </div>
-  <div class="sidenav-item empty-sidenav">
-  </div>
-  <div class="sidenav-item"><span>About Waltz de Fleur</span>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-  </div>
-  <div class="sidenav-item empty-sidenav">
-  </div>
-  <div class="sidenav-item"><span>My Account</span>
-    <mat-icon svgIcon="person"></mat-icon>
-  </div>
+  <app-occasion-sidenav></app-occasion-sidenav>
 </mat-sidenav>
 <mat-sidenav #drawer position="end" class="search-sidenav">
 
@@ -78,7 +51,9 @@
       </button>
     </div>
     <div class="center-nav nav">
-      <a routerLink="/home" class="brand">Bijou Fleur</a>
+      <a routerLink="/home" class="brand">
+        <span class="title">ChouChou</span><span class="subtitle">Florals</span> 
+      </a>
     </div>
     <div class="right-nav nav">
       <button (click)="drawer.toggle(); searchMode = true; isSticky=false;" mat-icon-button class="search-button"

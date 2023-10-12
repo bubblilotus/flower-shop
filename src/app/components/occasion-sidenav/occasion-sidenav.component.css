@@ -1,0 +1,17 @@
+.sidenav-item {
+    width: 100%;
+    line-height: 2em;
+    padding: .25em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sidenav-heading {
+    font-size: .8em;
+    line-height: 1em;
+}
+
+.empty-sidenav {
+    height: 1.5em;
+}

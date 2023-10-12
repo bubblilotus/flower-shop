@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
@@ -11,7 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
   templateUrl: './product-list.component.html',
   styleUrls: ['./product-list.component.css']
 })
-export class ProductListComponent implements OnInit{
+export class ProductListComponent implements OnInit, AfterViewInit {
   products: Product[] = [];
   currentOccasionId: number = 1;
   previousOccasionId: number = 1;
@@ -24,16 +24,22 @@ export class ProductListComponent implements OnInit{
 
   previousKeyword: string = "";
 
-  constructor(private productService: ProductService,
-              private cartService: CartServiceService,
-              private route: ActivatedRoute, private router: Router) { }
+  @ViewChild('paginator') paginator!: MatPaginator;
 
-  ngOnInit() {
+  constructor(private productService: ProductService,
+    private cartService: CartServiceService,
+    private route: ActivatedRoute, private router: Router) { }
+  ngAfterViewInit(): void {
     this.route.paramMap.subscribe(() => {
       this.listProducts();
     });
   }
 
+  ngOnInit() {
+   
+  }
+
+  
   listProducts() {
 
     // this.searchMode = this.route.snapshot.paramMap.has('keyword');
@@ -49,36 +55,46 @@ export class ProductListComponent implements OnInit{
   }
 
   handleSearchProducts() {
-
-    const theKeyword: string = this.route.snapshot.paramMap.get('keyword')!;
-
+    const keyword: string = this.route.snapshot.paramMap.get('keyword')!;
     // if we have a different keyword than previous
     // then set pageNumber to 1
-
-    if (this.previousKeyword != theKeyword) {
+    if (this.previousKeyword != keyword) {
       this.pageNumber = 1;
     }
-
-    this.previousKeyword = theKeyword;
-
-    console.log(`keyword=${theKeyword}, pageNumber=${this.pageNumber}`);
-
+    this.previousKeyword = keyword;
+    console.log(`keyword=${keyword}, pageNumber=${this.pageNumber}`);
     // now search for the products using keyword
-    this.productService.searchProductsPaginate(this.pageNumber - 1,
-                                               this.pageSize,
-                                               theKeyword).subscribe(this.processResult());
-                                               
+    this.productService.searchProductsPaginate(keyword, this.pageNumber - 1,
+      this.pageSize
+    ).subscribe(this.processResult());
+
   }
 
   handleListProducts() {
-
+    console.log("in handleListProducts")
+    console.log(this.pageSize);
     // check if "id" parameter is available
-    // const hasOccasionId: boolean = this.route.snapshot.paramMap.has('id');
+    const hasOccasionId: boolean = this.route.snapshot.paramMap.has('id');
 
-    // if (hasOccasionId) {
-    //   // get the "id" param string. convert string to a number using the "+" symbol
-    //   this.currentOccasionId = +this.route.snapshot.paramMap.get('id')!;
-    // }
+    if (hasOccasionId) {
+      // get the "id" param string. convert string to a number using the "+" symbol
+      this.currentOccasionId = +this.route.snapshot.paramMap.get('id')!;
+      if (this.previousOccasionId != this.currentOccasionId) {
+        this.pageNumber = 1;
+        this.paginator.firstPage();
+      }
+      this.previousOccasionId = this.currentOccasionId;
+
+      this.productService.getProductListByOccassionPaginate(this.currentOccasionId, this.pageNumber - 1,
+        this.pageSize)
+        .subscribe(this.processResult());
+
+    }
+    else {
+      this.productService.getProductListPaginate(this.pageNumber - 1,
+        this.pageSize)
+        .subscribe(this.processResult());
+    }
     // else {
     //   // not category id available ... default to category id 1
     //   this.currentOccasionId = 1;
@@ -100,9 +116,7 @@ export class ProductListComponent implements OnInit{
     // console.log(`currentOccasionId=${this.currentOccasionId}, pageNumber=${this.pageNumber}`);
 
     // now get the products for the given category id
-    this.productService.getProductListPaginate(this.pageNumber - 1,
-                                               this.pageSize)
-                                               .subscribe(this.processResult());
+
   }
 
   // updatePageSize(pageSize: string) {
@@ -117,12 +131,12 @@ export class ProductListComponent implements OnInit{
       this.pageNumber = data.page.number + 1;
       this.pageSize = data.page.size;
       this.totalElements = data.page.totalElements;
-      console.log(this.products);
+      console.log(data);
     };
   }
 
   addToCart(theProduct: Product) {
-    
+
     console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
 
     // TODO ... do the real work
@@ -130,20 +144,21 @@ export class ProductListComponent implements OnInit{
 
     this.cartService.addToCart(theCartItem);
   }
-  openDetails(productIndex: any){
+  openDetails(productIndex: any) {
     console.log(productIndex);
     this.router.navigateByUrl("/products/" + productIndex);
   }
 
-  onChangePage(event: PageEvent){
-      this.pageNumber = event.pageIndex +1;
-      console.log(this.pageSize != event.pageSize);
-      if(this.pageSize != event.pageSize){
-        this.pageSize = event.pageSize;
-        this.pageNumber = 1;
-      }
-      this.totalElements = event.length;
-      
-      this.listProducts();
+  onChangePage(event: PageEvent) {
+    this.pageNumber = event.pageIndex + 1;
+    console.log(this.pageSize != event.pageSize);
+    if (this.pageSize != event.pageSize) {
+      this.pageSize = event.pageSize;
+      this.pageNumber = 1;
+    }
+    console.log(this.pageSize);
+    this.totalElements = event.length;
+
+    this.listProducts();
   }
 }

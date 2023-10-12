@@ -1,0 +1,18 @@
+<div class="sidenav-item sidenav-heading">
+    <span>Bouquets for every occasion.</span>
+  </div>
+  <div *ngFor = "let occasion of occasions" 
+  (click) = "getProducts(occasion)"
+  class="sidenav-item"><span>{{occasion.occasionName}}</span>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </div>
+  <div class="sidenav-item empty-sidenav">
+  </div>
+  <div class="sidenav-item"><span>About Waltz de Fleur</span>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </div>
+  <div class="sidenav-item empty-sidenav">
+  </div>
+  <div class="sidenav-item"><span>My Account</span>
+    <mat-icon svgIcon="person"></mat-icon>
+  </div>

@@ -12,7 +12,7 @@ class="example-card">
       <button mat-raised-button>ADD TO CART</button>
     </mat-card-actions>
 </mat-card>
-<mat-paginator (page) = "onChangePage($event)"
+<mat-paginator #paginator (page) = "onChangePage($event)"
 [length]="totalElements"
               [pageSize]="pageSize"
               [pageSizeOptions]="[5, 10, 20]"
