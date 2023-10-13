@@ -9,9 +9,9 @@ import { Observable, Subject, map } from 'rxjs';
 })
 export class ProductService {
 
-  private baseUrl = 'http://localhost:8080/api/products';
+  private baseUrl = 'https://localhost:8443/api/products';
 
-  private categoryUrl = 'http://localhost:8080/api/occasions';
+  private categoryUrl = 'https://localhost:8443/api/occasions';
 
   imageEmitter: Subject<any> = new Subject<any>;
 
@@ -34,7 +34,34 @@ export class ProductService {
       "/assets/images/slides/bouquet.jpg", true, 10),
   ];
   constructor(private httpClient: HttpClient) { }
-
+  getProductsStatic = [
+    {
+      "id": "1",
+      "name": "Product 1",
+      "description": "This is product 1",
+      "composition": "Composition 1",
+      "meaning": "Meaning 1",
+      "unitPrice": 10.99,
+      "imageUrl": "https://example.com/product1.jpg",
+      "active": true,
+      "unitsInStock": 100,
+      "dateCreated": "2023-10-12T16:09:21.000Z",
+      "lastUpdated": "2023-10-12T16:09:21.000Z"
+  }, 
+  {
+    "id": "2",
+    "name": "Product 1",
+    "description": "This is product 1",
+    "composition": "Composition 1",
+    "meaning": "Meaning 1",
+    "unitPrice": 10.99,
+    "imageUrl": "https://example.com/product1.jpg",
+    "active": true,
+    "unitsInStock": 100,
+    "dateCreated": "2023-10-12T16:09:21.000Z",
+    "lastUpdated": "2023-10-12T16:09:21.000Z"
+}
+  ]
   getProduct(productId: number): Observable<Product> {
 
     // need to build URL based on product id
