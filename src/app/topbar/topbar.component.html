@@ -1,76 +1,77 @@
-<mat-sidenav [(opened)]="opened">
-  <div class="sidenav-close">
-    <button (click)="opened = !opened" mat-icon-button class="close-button" aria-label="close menu button">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-  <app-occasion-sidenav></app-occasion-sidenav>
-</mat-sidenav>
-<mat-sidenav #drawer position="end" class="search-sidenav">
-
-  <div *ngIf="searchMode" class="search-nav">
+  <mat-sidenav [(opened)]="opened" [mode]="'side'" fixedInViewport="true">
     <div class="sidenav-close">
-      <button class="search-close-button" mat-icon-button (click)=drawer.toggle()>
+      <button (click)="opened = !opened" mat-icon-button class="close-button" aria-label="close menu button">
         <mat-icon>close</mat-icon>
       </button>
     </div>
-    <div class="search-line">
-      <mat-form-field class="example-form-field">
-        <input matInput placeholder="Search" type="text" [(ngModel)]="value">
-        <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+    <app-occasion-sidenav></app-occasion-sidenav>
+  </mat-sidenav>
+  <mat-sidenav #drawer position="end" class="search-sidenav">
+  
+    <div *ngIf="searchMode" class="search-nav">
+      <div class="sidenav-close">
+        <button class="search-close-button" mat-icon-button (click)=drawer.toggle()>
           <mat-icon>close</mat-icon>
         </button>
-      </mat-form-field>
-      <button class="search-close-button" mat-button>
-        <mat-icon svgIcon="search"></mat-icon>
-      </button>
+      </div>
+      <div class="search-line">
+        <mat-form-field class="example-form-field">
+          <input matInput placeholder="Search" type="text" [(ngModel)]="value">
+          <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+        <button class="search-button" mat-button
+        (click) = "search(value)">
+          <mat-icon svgIcon="search"></mat-icon>
+        </button>
+      </div>
+      
     </div>
-    
+    <div *ngIf="!searchMode" class="cart-nav">
+      <div class="cart-header">
+        <h3>My Cart - {{cartCount}} items</h3>
+        <button class="search-close-button" mat-icon-button (click)=drawer.toggle()>
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+      <app-cart></app-cart>
+    </div>
+  
+  </mat-sidenav>
+  
+  <div class="tophalf">
+    <div class="bg-image" [style.background-image]="'url(' + image + ')'"></div>
+    <mat-toolbar #stickyMenu
+    [class.sticky] = "isSticky"
+    >
+      <div class="left-nav nav">
+        <button (click)="opened = !opened" mat-icon-button class="menu-button" aria-label="open menu button">
+          <mat-icon svgIcon="menu" 
+          [ngClass] = "isSticky? 'black-icon' : 'white-icon'"></mat-icon>
+        </button>
+      </div>
+      <div class="center-nav nav">
+        <a routerLink="/home" class="brand">
+          <span class="title">ChouChou</span><span class="subtitle">Florals</span> 
+        </a>
+      </div>
+      <div class="right-nav nav">
+        <button (click)="drawer.toggle(); searchMode = true; isSticky=false;" mat-icon-button class="search-button"
+          aria-label="search button">
+          <mat-icon svgIcon="search" 
+          [ngClass] = "isSticky? 'black-icon' : 'white-icon'"></mat-icon>
+        </button>
+        <button mat-icon-button class="account-button gray-icon" aria-label="account information button">
+          <mat-icon svgIcon="person" 
+          [ngClass] = "isSticky? 'black-icon' : 'white-icon'"></mat-icon>
+        </button>
+        <button (click)="drawer.toggle(); searchMode = false" mat-icon-button class="shopping-bag-button gray-icon"
+          aria-label="shopping bag button">
+          <mat-icon svgIcon="bag" 
+          [ngClass] = "isSticky? 'black-icon' : 'white-icon'"
+          [matBadge]="cartCount" matBadgeColor="warn"></mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
   </div>
-  <div *ngIf="!searchMode" class="cart-nav">
-    <div class="cart-header">
-      <h3>My Cart - {{cartCount}} items</h3>
-      <button class="search-close-button" mat-icon-button (click)=drawer.toggle()>
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
-    <app-cart></app-cart>
-  </div>
-
-</mat-sidenav>
-
-<div class="tophalf">
-  <div class="bg-image" [style.background-image]="'url(' + image + ')'"></div>
-  <mat-toolbar #stickyMenu
-  [class.sticky] = "isSticky"
-  >
-    <div class="left-nav nav">
-      <button (click)="opened = !opened" mat-icon-button class="menu-button" aria-label="open menu button">
-        <mat-icon svgIcon="menu" 
-        [ngClass] = "isSticky? 'black-icon' : 'white-icon'"></mat-icon>
-      </button>
-    </div>
-    <div class="center-nav nav">
-      <a routerLink="/home" class="brand">
-        <span class="title">ChouChou</span><span class="subtitle">Florals</span> 
-      </a>
-    </div>
-    <div class="right-nav nav">
-      <button (click)="drawer.toggle(); searchMode = true; isSticky=false;" mat-icon-button class="search-button"
-        aria-label="search button">
-        <mat-icon svgIcon="search" 
-        [ngClass] = "isSticky? 'black-icon' : 'white-icon'"></mat-icon>
-      </button>
-      <button mat-icon-button class="account-button gray-icon" aria-label="account information button">
-        <mat-icon svgIcon="person" 
-        [ngClass] = "isSticky? 'black-icon' : 'white-icon'"></mat-icon>
-      </button>
-      <button (click)="drawer.toggle(); searchMode = false" mat-icon-button class="shopping-bag-button gray-icon"
-        aria-label="shopping bag button">
-        <mat-icon svgIcon="bag" 
-        [ngClass] = "isSticky? 'black-icon' : 'white-icon'"
-        [matBadge]="cartCount" matBadgeColor="warn"></mat-icon>
-      </button>
-    </div>
-  </mat-toolbar>
-</div>

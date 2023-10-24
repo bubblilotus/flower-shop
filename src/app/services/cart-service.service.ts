@@ -6,6 +6,9 @@ import { BehaviorSubject, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class CartServiceService {
+  isEmpty() {
+      return this.cartItems.length < 1 || this.cartItems == undefined;
+  }
 
   cartItems: CartItem[] = [];
 

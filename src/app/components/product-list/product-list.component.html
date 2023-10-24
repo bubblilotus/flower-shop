@@ -1,23 +1,28 @@
-<mat-card 
-*ngFor = "let product of products"
-class="example-card">
-    <img (click) = "openDetails(product.id)"
-    class="card-section image" src={{product.imageUrl}} alt="Photo of a Shiba Inu">
-    <mat-card-content (click) = "openDetails(product.id)"
-    class="card-section">
-      <div class="title">{{product.name}}</div>
-      <div class="price">{{product.unitPrice}}</div>
-    </mat-card-content>
-    <mat-card-actions class="card-section">
-      <button mat-raised-button>ADD TO CART</button>
-    </mat-card-actions>
-</mat-card>
-<mat-paginator #paginator (page) = "onChangePage($event)"
-[length]="totalElements"
-              [pageSize]="pageSize"
-              [pageSizeOptions]="[5, 10, 20]"
-              aria-label="Select page">
-</mat-paginator>
+<div class="products">
+  <div class="cards">
+    <mat-card 
+  *ngFor = "let product of products"
+  class="example-card">
+      <img (click) = "openDetails(product.id)"
+      class="card-section image" src={{product.imageUrl}} alt="Photo of a Shiba Inu">
+      <mat-card-content (click) = "openDetails(product.id)"
+      class="card-section">
+        <div class="title">{{product.name}}</div>
+        <div class="price">{{product.unitPrice}}</div>
+      </mat-card-content>
+      <mat-card-actions class="card-section">
+        <button mat-raised-button>ADD TO CART</button>
+      </mat-card-actions>
+  </mat-card>
+  </div>
+  <mat-paginator #paginator (page) = "onChangePage($event)"
+  [length]="totalElements"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 20]"
+                aria-label="Select page">
+  </mat-paginator>
+</div>
+
 
 
   

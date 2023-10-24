@@ -30,6 +30,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { OccasionSidenavComponent } from './components/occasion-sidenav/occasion-sidenav.component';
 import { FullProductListComponent } from './components/full-product-list/full-product-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { OccasionListComponent } from './components/occasion-list/occasion-list.component';
 
 
 
@@ -45,6 +46,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
     OccasionSidenavComponent,
     FullProductListComponent,
     CheckoutComponent,
+    OccasionListComponent,
   ],
   imports: [
     BrowserModule,

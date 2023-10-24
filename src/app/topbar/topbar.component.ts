@@ -4,6 +4,7 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CartServiceService } from '../services/cart-service.service';
 import { Observable, Subject } from 'rxjs';
 import { ProductService } from '../services/product.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-topbar',
@@ -29,7 +30,7 @@ image: any = "/assets/images/slides/bouquet.jpg";
   constructor(
     private domSanitizer: DomSanitizer,
     public matIconRegistry: MatIconRegistry, private cartService: CartServiceService,
-    private productService: ProductService) {
+    private productService: ProductService, private router: Router) {
     this.matIconRegistry
       .addSvgIcon('search', this.setPath(`${this.path}/search.svg`))
       .addSvgIcon('person', this.setPath(`${this.path}/person.svg`))
@@ -49,6 +50,10 @@ image: any = "/assets/images/slides/bouquet.jpg";
       }
     );
     
+  }
+  search(value: any){
+    let searchUrl = "/products/search/"
+    this.router.navigateByUrl(searchUrl + value);
   }
   ngAfterViewInit(){
     this.elementPosition = this.menuElement.nativeElement;

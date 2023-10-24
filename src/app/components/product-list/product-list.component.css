@@ -1,5 +1,23 @@
+.products{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: .25em;
+    margin-top: 1em;
+    align-items: center;
+    justify-content: center;
+}
+.cards{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+}
 mat-card{
     width: calc(90%/2);
+    background-color: #fffff1;
     --mdc-elevated-card-container-elevation: none;
 }
 mat-card-content{
@@ -26,3 +44,46 @@ mat-card-actions{
     justify-content: center;
     display: none;
 }
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 767px) {
+    /* Styles */
+    app-occasion-list{
+        display: none;
+    }
+    .image{
+        /* background-image: url("/assets/images/slides/bouquet.jpg");  */
+        height: 46vw;
+        width: 46vw;
+        /* background-size: cover;
+        background-repeat: no-repeat; */
+    }
+  }
+ /* Medium devices (landscape tablets, 768px and up) */
+ @media only screen and (min-width: 768px) {
+    /* Styles */
+    mat-card{
+        width: calc(90%/3);
+        --mdc-elevated-card-container-elevation: none;
+    }
+    .image{
+        height: 31.58vw;
+        width: 31.58vw;
+    }
+  }
+  @media only screen and (min-width: 992px) {
+    /* Styles */
+    .products{
+        width: 80%;
+    }
+    mat-card{
+        width: calc(90%/4);
+        --mdc-elevated-card-container-elevation: none;
+    }
+    .image{
+        /* background-image: url("/assets/images/slides/bouquet.jpg");  */
+        height: 18vw;
+        width: 18vw;
+        /* background-size: cover;
+        background-repeat: no-repeat; */
+    }
+  }

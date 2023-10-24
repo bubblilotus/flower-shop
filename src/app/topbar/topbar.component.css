@@ -24,7 +24,7 @@
     justify-content: space-evenly;
     align-items: center;
     background: transparent !important;
-    color: white !important;
+    color: #fffff1 !important;
     transition: background-color .2s;
     transition-delay: -.2s;
 }
@@ -71,8 +71,8 @@
 a{
     text-decoration: none;
 }
-a:active, a:focus, a:visited{
-    color: white;
+a, a:active, a:focus, a:visited{
+    color: #fffff1;
 }
 .brand {
     font-weight: 800;
@@ -186,21 +186,21 @@ mat-form-field{
     overflow: hidden;
     z-index: 10;
     width: 100%;
-    background-color: white !important;
+    background-color: #fffff1 !important;
     z-index: 4;
-    color: black !important;
+    color: #1e1e1e !important;
     height: 4em !important;
 }
-.sticky a:active,.sticky a:focus,.sticky a:visited{
-    color: black;
+.sticky a:active,.sticky a:focus,.sticky a:visited, .sticky a{
+    color: #1e1e1e;
 }
 
 .mat-icon.black-icon svg path{
-    color: black;
-    stroke: black;
+    color: #1e1e1e;
+    stroke: #1e1e1e;
     stroke-width: 2;
 }
 .mat-icon.notranslate.mat-badge.white-icon.mat-badge-warn.mat-icon-no-color.mat-badge-overlap.mat-badge-above.mat-badge-after.mat-badge-medium.black-icon path{
-    stroke: black;
+    stroke: #1e1e1e;
 }
 

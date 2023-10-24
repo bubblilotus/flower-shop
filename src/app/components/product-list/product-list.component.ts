@@ -42,15 +42,14 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   
   listProducts() {
 
-    // this.searchMode = this.route.snapshot.paramMap.has('keyword');
+    this.searchMode = this.route.snapshot.paramMap.has('keyword');
 
-    // if (this.searchMode) {
-    //   this.handleSearchProducts();
-    // }
-    // else {
-    //   this.handleListProducts();
-    // }
-    this.handleListProducts();
+    if (this.searchMode) {
+      this.handleSearchProducts();
+    }
+    else {
+      this.handleListProducts();
+    }
 
   }
 
