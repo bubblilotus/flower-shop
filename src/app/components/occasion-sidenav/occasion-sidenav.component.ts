@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Category } from 'src/app/common/category';
 import { Occasion } from 'src/app/common/occasion';
 import { ProductService } from 'src/app/services/product.service';
+import { SidenavService } from 'src/app/services/sidenav.service';
 
 @Component({
   selector: 'app-occasion-sidenav',
@@ -9,20 +11,23 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./occasion-sidenav.component.css']
 })
 export class OccasionSidenavComponent implements OnInit{
-  occasions: Occasion[] = [];
-  constructor(private productService: ProductService, private router: Router){}
+  categories: Category[] = [];
+  constructor(private productService: ProductService, 
+    private sidenavService: SidenavService,
+     private router: Router){}
   ngOnInit(): void {
-    this.getOccasions();
+    this.getCategories();
   }
-  getOccasions() {
-    this.productService.getOccasions().subscribe(
+  getCategories() {
+    this.productService.getCategories().subscribe(
       (data) => {
-        this.occasions = data;
+        this.categories = data;
       }
     );
   }
-  getProducts(occasion: Occasion){
-    this.router.navigateByUrl(`occasions/${occasion.id}`);
+  getProducts(category: Category){
+    this.sidenavService.close();
+    this.router.navigateByUrl(`categories/${category.id}`);
   }
 
 }

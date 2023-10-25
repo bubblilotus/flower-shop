@@ -1,9 +1,9 @@
 <div class="sidenav-item sidenav-heading">
-    <span>Bouquets for every occasion.</span>
+    <span>Bouquets for every category.</span>
   </div>
-  <div *ngFor = "let occasion of occasions" 
-  (click) = "getProducts(occasion)"
-  class="sidenav-item"><span>{{occasion.occasionName}}</span>
+  <div *ngFor = "let category of categories" 
+  (click) = "getProducts(category)"
+  class="sidenav-item"><span>{{category.categoryName}}</span>
     <mat-icon>keyboard_arrow_right</mat-icon>
   </div>
   <div class="sidenav-item empty-sidenav">

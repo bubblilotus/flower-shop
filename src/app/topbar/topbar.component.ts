@@ -5,6 +5,7 @@ import { CartServiceService } from '../services/cart-service.service';
 import { Observable, Subject } from 'rxjs';
 import { ProductService } from '../services/product.service';
 import { Router } from '@angular/router';
+import { SidenavService } from '../services/sidenav.service';
 
 @Component({
   selector: 'app-topbar',
@@ -30,6 +31,7 @@ image: any = "/assets/images/slides/bouquet.jpg";
   constructor(
     private domSanitizer: DomSanitizer,
     public matIconRegistry: MatIconRegistry, private cartService: CartServiceService,
+    private sidenavService: SidenavService,
     private productService: ProductService, private router: Router) {
     this.matIconRegistry
       .addSvgIcon('search', this.setPath(`${this.path}/search.svg`))
@@ -49,7 +51,11 @@ image: any = "/assets/images/slides/bouquet.jpg";
         console.log(this.image);
       }
     );
-    
+    this.sidenavService.open.subscribe(
+      (data) => {
+        this.opened = data;
+      }
+    );
   }
   search(value: any){
     let searchUrl = "/products/search/"

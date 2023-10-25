@@ -13,8 +13,8 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class ProductListComponent implements OnInit, AfterViewInit {
   products: Product[] = [];
-  currentOccasionId: number = 1;
-  previousOccasionId: number = 1;
+  currentCategoryId: number = 1;
+  previousCategoryId: number = 1;
   searchMode: boolean = false;
 
   // new properties for pagination
@@ -70,21 +70,19 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   }
 
   handleListProducts() {
-    console.log("in handleListProducts")
-    console.log(this.pageSize);
     // check if "id" parameter is available
-    const hasOccasionId: boolean = this.route.snapshot.paramMap.has('id');
+    const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
 
-    if (hasOccasionId) {
+    if (hasCategoryId) {
       // get the "id" param string. convert string to a number using the "+" symbol
-      this.currentOccasionId = +this.route.snapshot.paramMap.get('id')!;
-      if (this.previousOccasionId != this.currentOccasionId) {
+      this.currentCategoryId = +this.route.snapshot.paramMap.get('id')!;
+      if (this.previousCategoryId != this.currentCategoryId) {
         this.pageNumber = 1;
         this.paginator.firstPage();
       }
-      this.previousOccasionId = this.currentOccasionId;
+      this.previousCategoryId = this.currentCategoryId;
 
-      this.productService.getProductListByOccassionPaginate(this.currentOccasionId, this.pageNumber - 1,
+      this.productService.getProductListByCategoryPaginate(this.currentCategoryId, this.pageNumber - 1,
         this.pageSize)
         .subscribe(this.processResult());
 
@@ -96,26 +94,8 @@ export class ProductListComponent implements OnInit, AfterViewInit {
     }
     // else {
     //   // not category id available ... default to category id 1
-    //   this.currentOccasionId = 1;
+    //   this.currentCategoryId = 1;
     // }
-
-    //
-    // Check if we have a different category than previous
-    // Note: Angular will reuse a component if it is currently being viewed
-    //
-
-    // if we have a different category id than previous
-    // then set pageNumber back to 1
-    // if (this.previousOccasionId != this.currentOccasionId) {
-    //   this.pageNumber = 1;
-    // }
-
-    // this.previousOccasionId = this.currentOccasionId;
-
-    // console.log(`currentOccasionId=${this.currentOccasionId}, pageNumber=${this.pageNumber}`);
-
-    // now get the products for the given category id
-
   }
 
   // updatePageSize(pageSize: string) {
