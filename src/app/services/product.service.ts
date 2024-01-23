@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { Occasion } from '../common/occasion';
 import { Observable, Subject, map } from 'rxjs';
 import { Category } from '../common/category';
+import { environment } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,12 @@ import { Category } from '../common/category';
 export class ProductService {
 
 
-  private baseUrl = 'https://localhost:8443/api/products';
-
-  private categoryUrl = 'https://localhost:8443/api/categories';
-  private occasionUrl = 'https://localhost:8443/api/occasions';
+  // private baseUrl = 'http://veraapi.us-east-2.elasticbeanstalk.com/api/products';
+  private baseUrl = environment.apiUrl + '/products';
+  private categoryUrl = environment.apiUrl + '/categories';
+  private occasionUrl = environment.apiUrl + '/occasions';
+  // private categoryUrl = 'http://veraapi.us-east-2.elasticbeanstalk.com/api/categories';
+  // private occasionUrl = 'http://veraapi.us-east-2.elasticbeanstalk.com/api/occasions';
 
   imageEmitter: Subject<any> = new Subject<any>;
 
@@ -55,7 +58,7 @@ export class ProductService {
 
   private getProducts(searchUrl: string): Observable<Product[]> {
     return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
-      map(response => response._embedded.products)
+      map(response => response._embedded.product)
     );
   }
   getCategories(): Observable<Category[]> {
@@ -73,7 +76,7 @@ export class ProductService {
 
 interface GetResponseProducts {
   _embedded: {
-    products: Product[];
+    product: Product[];
   },
   page: {
     size: number,

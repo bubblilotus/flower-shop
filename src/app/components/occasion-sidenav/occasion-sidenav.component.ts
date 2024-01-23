@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Category } from 'src/app/common/category';
@@ -11,6 +12,7 @@ import { SidenavService } from 'src/app/services/sidenav.service';
   styleUrls: ['./occasion-sidenav.component.css']
 })
 export class OccasionSidenavComponent implements OnInit{
+  panelOpened: boolean = false;
   categories: Category[] = [];
   constructor(private productService: ProductService, 
     private sidenavService: SidenavService,
@@ -28,6 +30,13 @@ export class OccasionSidenavComponent implements OnInit{
   getProducts(category: Category){
     this.sidenavService.close();
     this.router.navigateByUrl(`categories/${category.id}`);
+  }
+  go(id: string){
+    this.router.navigateByUrl("/policies" + id);
+    this.close();
+  }
+  close(){
+    this.sidenavService.close();
   }
 
 }

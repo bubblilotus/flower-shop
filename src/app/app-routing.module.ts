@@ -5,13 +5,16 @@ import { HomeComponent } from './components/home/home.component';
 import { FullProductListComponent } from './components/full-product-list/full-product-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { CartGuard } from './guards/cart-guard';
-import { ProductListComponent } from './components/product-list/product-list.component';
+import { PoliciesComponent } from './components/policies/policies.component';
+import { AboutComponent } from './components/about/about.component';
 
 const routes: Routes = [
   {path: 'products/:id', component: ProductDetailComponent},
-  {path: 'products/search/:keyword', component: ProductListComponent},
+  {path: 'products/search/:keyword', component: FullProductListComponent},
   {path: 'categories/:id', component: FullProductListComponent},
-  {path: 'home', component: HomeComponent},
+  {path: 'home', component: HomeComponent}, 
+  {path: 'policies', component: PoliciesComponent},
+  {path: 'about', component: AboutComponent},
   {
     path: 'checkout',
     component: CheckoutComponent,

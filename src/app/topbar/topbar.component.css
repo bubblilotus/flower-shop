@@ -1,6 +1,6 @@
 .tophalf {
     width: 100%;
-    height: 75vh;
+    height: fit-content;
     position: relative;
 }
 .bg-image{
@@ -16,17 +16,22 @@
     margin-bottom: -2em;
 }
 
-.mat-toolbar {
+mat-toolbar {
+    width: 100%;
     height: 5em !important;
     position: relative;
-    padding: 1em !important;
+    /* padding: 1em !important; */
+    display: flex;
+    flex-direction: column;
+    background: #fffff5 !important;
+    color: #1e1e1e !important;
+}
+.main-nav{
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    background: transparent !important;
-    color: #fffff1 !important;
-    transition: background-color .2s;
-    transition-delay: -.2s;
 }
 
 .mat-sidenav {
@@ -38,6 +43,7 @@
     justify-content: center;
     padding: 1em;
     z-index: 10;
+    background: #fffff7;
 }
 
 .sidenav-close {
@@ -72,7 +78,7 @@ a{
     text-decoration: none;
 }
 a, a:active, a:focus, a:visited{
-    color: #fffff1;
+    color: #1e1e1e;
 }
 .brand {
     font-weight: 800;
@@ -125,6 +131,7 @@ button.account-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-b
     height: 100%;
 }
 .search-line{
+    width: 100%;
     display: flex;
     justify-content: space-around;
 }
@@ -135,10 +142,11 @@ button.account-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-b
 }
 
 .mat-mdc-form-field {
-    max-width: 80%;
+    max-width: 100%;
 }
 mat-form-field{
-    width: 80%;
+    width: 100%;
+    font-size: 1em;
 }
 
 .search-close-button {
@@ -172,11 +180,8 @@ mat-form-field{
     display: flex;
     justify-content: space-between;
     align-items: center;
-    position: fixed;
-    top: 0;
-    right: 0;
     height: 5em;
-    background-color: white;
+    background-color: #fffff7;
     z-index: 6;
     padding: 0 1em;
 }
@@ -184,12 +189,9 @@ mat-form-field{
     position: fixed;
     top: 0;
     overflow: hidden;
-    z-index: 10;
-    width: 100%;
-    background-color: #fffff1 !important;
     z-index: 4;
-    color: #1e1e1e !important;
-    height: 4em !important;
+    transition: background-color .2s;
+    transition-delay: -1s;
 }
 .sticky a:active,.sticky a:focus,.sticky a:visited, .sticky a{
     color: #1e1e1e;
@@ -202,5 +204,27 @@ mat-form-field{
 }
 .mat-icon.notranslate.mat-badge.white-icon.mat-badge-warn.mat-icon-no-color.mat-badge-overlap.mat-badge-above.mat-badge-after.mat-badge-medium.black-icon path{
     stroke: #1e1e1e;
+}
+.search-open{
+    height: 8em !important;
+}
+.cart-nav{
+    width: 100%;
+    min-height: 100vh;
+}
+.cart-action{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+}
+.cart-action button{
+    width: 100%;
+    background-color: black;
+
+}
+.button-text{
+    color: white;
+    font-size: 1.2em;
 }
 

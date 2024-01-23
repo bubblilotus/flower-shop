@@ -1,0 +1,30 @@
+.jumbotron{
+    background-color: rgba(0,0,0,0.02);
+    padding: 1.5em 1em .5em 1em;
+}
+.links{
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+}
+.links a{
+    width: 33%;
+    text-align: center;
+    text-transform: capitalize;
+    line-height: 1.5em;
+}
+.subheading{
+    background-color: #fffff1;
+    padding: 1em;
+}
+.subheading p{
+    line-height: 1.25em;
+    font-size: 1.35em;
+    padding: .5em 0;
+}
+
+@media only screen and (max-width: 600px) {
+    .links a{
+        width: 50%;
+    }
+}

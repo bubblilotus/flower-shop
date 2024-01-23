@@ -1,4 +1,4 @@
-.product-detail-wrapper{
+/* .product-detail-wrapper{
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -34,4 +34,43 @@ mat-card-actions button{
 }
 mat-accordion{
     margin-top: 1em;
+} */
+.detail-wrapper{
+    width: 100%;
+    min-height: 100vh;
+    padding: 3em;
+    background-color: #fffff1;
 }
+.info-container{
+    width: 45%;
+    float: left;
+}
+.image-container{
+    width: 45%;
+    float: left;
+    margin-right: 2em;
+}
+.info-container div{
+line-height: 1.5em;
+margin: 1em 0;
+}
+.price{
+    font-size: 1.25em;
+}
+.title{
+    font-size: 1.5em;
+}
+.outofstockMessage{
+    color: red;
+}
+.mat-mdc-raised-button:not(:disabled){
+    background: black;
+}
+.button-text{
+    color: white;
+}
+@media only screen and (max-width: 768px) {
+    .info-container, .image-container{
+        width: 100%;
+    }
+  }

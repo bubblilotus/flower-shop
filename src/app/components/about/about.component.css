@@ -1,0 +1,10 @@
+.about{
+    width: 100%;
+    min-height: 100vh;
+    background: #fffff1;
+    padding: 1em 0.5em;
+}
+p{
+    line-height: 1.5em;
+    font-size: 1.15em;
+}

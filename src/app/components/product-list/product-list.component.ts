@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
 import { CartItem } from 'src/app/common/cart-item';
 import { Product } from 'src/app/common/product';
 import { CartServiceService } from 'src/app/services/cart-service.service';
@@ -16,6 +17,7 @@ export class ProductListComponent implements OnInit, AfterViewInit {
   currentCategoryId: number = 1;
   previousCategoryId: number = 1;
   searchMode: boolean = false;
+  productCountEmitter = new Subject<number>();
 
   // new properties for pagination
   pageNumber: number = 1;
@@ -106,7 +108,8 @@ export class ProductListComponent implements OnInit, AfterViewInit {
 
   processResult() {
     return (data: any) => {
-      this.products = data._embedded.products;
+      console.log(data);
+      this.products = data._embedded.product;
       this.pageNumber = data.page.number + 1;
       this.pageSize = data.page.size;
       this.totalElements = data.page.totalElements;

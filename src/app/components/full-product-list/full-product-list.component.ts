@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-full-product-list',
@@ -6,5 +7,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./full-product-list.component.css']
 })
 export class FullProductListComponent {
-
 }

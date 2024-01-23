@@ -1,18 +1,50 @@
-<div class="sidenav-item sidenav-heading">
-    <span>Bouquets for every category.</span>
-  </div>
+<div class="sidenav-item"
+routerLink = "/"
+(click) = "close()"
+><span>Home</span>
+  <mat-icon>keyboard_arrow_right</mat-icon>
+</div>
   <div *ngFor = "let category of categories" 
   (click) = "getProducts(category)"
-  class="sidenav-item"><span>{{category.categoryName}}</span>
+  class="sidenav-item"
+  ><span>{{category.categoryName}}</span>
     <mat-icon>keyboard_arrow_right</mat-icon>
   </div>
   <div class="sidenav-item empty-sidenav">
   </div>
-  <div class="sidenav-item"><span>About Waltz de Fleur</span>
+  <div class="sidenav-item"
+  routerLink = "/about"
+  (click) = "close()" 
+  ><span>About Vera Flowers & Gifts</span>
     <mat-icon>keyboard_arrow_right</mat-icon>
   </div>
   <div class="sidenav-item empty-sidenav">
   </div>
-  <div class="sidenav-item"><span>My Account</span>
+  <!-- <div class="sidenav-item"
+  ><span>My Account</span>
     <mat-icon svgIcon="person"></mat-icon>
-  </div>
+  </div> -->
+  <mat-accordion>
+    <mat-expansion-panel hideToggle 
+    (opened) = "panelOpened = true"
+    (closed) = "panelOpened = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Policies and Information
+        </mat-panel-title>
+        <mat-icon *ngIf = "panelOpened">keyboard_arrow_up</mat-icon>
+        <mat-icon *ngIf = "!panelOpened">keyboard_arrow_down</mat-icon>
+      </mat-expansion-panel-header>
+      <a href="/policies#shipping"><div class="sidenav-item"><span>Shipping & Delivery</span>
+      </div></a>
+      <a href="/policies#returns"><div class="sidenav-item"><span>Returns & Exchanges</span>
+      </div></a>
+      <a href="/policies#privacy"><div class="sidenav-item"><span>Privacy</span>
+      </div></a>
+      <a href="/policies#pets"><div class="sidenav-item"><span>Pets & Children</span>
+      </div></a>
+      <a href="/policies#catAllergyWarning"><div class="sidenav-item"><span>Cat Allergy Warning</span>
+      </div></a>
+    </mat-expansion-panel>
+  </mat-accordion>
+

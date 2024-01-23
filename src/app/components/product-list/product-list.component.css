@@ -8,6 +8,16 @@
     align-items: center;
     justify-content: center;
 }
+.result-text{
+    width: 95%;
+    padding-left: .25em;
+    margin: 1.5em 0;
+    font-size: .75em;
+    color: #050505;
+}
+.result-text p{
+    width: 100%;
+}
 .cards{
     width: 100%;
     height: 100%;
@@ -15,10 +25,23 @@
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
+hr {
+    border: none;
+    border-top: 1px solid gainsboro; /* Change this to the desired color */
+  }
+  .cards{
+    min-height: 60vh;
+  }
 mat-card{
     width: calc(90%/2);
     background-color: #fffff1;
     --mdc-elevated-card-container-elevation: none;
+}
+.image:hover, .title:hover, .price:hover{
+    cursor: pointer;
+}
+.outofstock{
+    opacity: 0.65;
 }
 mat-card-content{
     padding: 1.25em 0;
@@ -43,6 +66,10 @@ mat-card-actions{
     display: flex;
     justify-content: center;
     display: none;
+}
+mat-paginator{
+    background-color: #fffff1;
+    margin-bottom: 2em;
 }
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 767px) {

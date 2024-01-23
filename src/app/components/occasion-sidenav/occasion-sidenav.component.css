@@ -7,7 +7,9 @@
     justify-content: space-between;
     cursor: pointer;
 }
-
+.sidenav-item:hover{
+    background-color: rgba(0, 0, 0, 0.04);
+}
 .sidenav-heading {
     font-size: .8em;
     line-height: 1em;
@@ -15,4 +17,17 @@
 
 .empty-sidenav {
     height: 1.5em;
+}
+.mat-expansion-panel:not([class*=mat-elevation-z]){
+    box-shadow: none;
+    background: #fffff7;
+}
+.mat-expansion-panel-header{
+    padding: 0.25em;
+}
+.mat-expansion-panel-header-title{
+    font-size: 1.25em;
+}
+a{
+    text-decoration: none;
 }

@@ -2,11 +2,13 @@ import { AfterViewInit, Component } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Address } from 'src/app/common/address';
+import { CartItem } from 'src/app/common/cart-item';
 import { Country } from 'src/app/common/country';
 import { Order } from 'src/app/common/order';
 import { OrderItem } from 'src/app/common/order-item';
 import { PaymentInfo } from 'src/app/common/payment-info';
 import { Purchase } from 'src/app/common/purchase';
+import { Recipient } from 'src/app/common/recipient';
 import { State } from 'src/app/common/state';
 import { CartServiceService } from 'src/app/services/cart-service.service';
 import CheckoutService from 'src/app/services/checkout.service';
@@ -21,7 +23,10 @@ import { FormValidator } from 'src/app/validators/form-validator';
 })
 export class CheckoutComponent implements AfterViewInit {
   checkoutFormGroup!: FormGroup;
+  extraFees: any;
+  total: any;
 
+  cartItems: CartItem[] = [];
   totalPrice: number = 0;
   totalQuantity: number = 0;
 
@@ -33,6 +38,8 @@ export class CheckoutComponent implements AfterViewInit {
   shippingAddressStates: State[] = [];
   billingAddressStates: State[] = [];
 
+  isDisabled: boolean = false;
+
   // initialize Stripe API
   key = "pk_test_51NxxzzHdW59TasEwwEhAhmQZCiszt2so45MNy6pMleAqpG3PLok24BRWqKx8S2gpxP2rqjNaFhhdT8crBRgvkdPm00x8MjiEJ9";
   stripe = Stripe(this.key);
@@ -42,7 +49,7 @@ export class CheckoutComponent implements AfterViewInit {
   shippingAddressElement: any;
   billingAddressElement: any;
   displayError: any = "";
-  client_secret = "";
+  client_secret: string = "";
   elements: any;
   constructor(private formBuilder: FormBuilder,
     private formService: FormServiceService,
@@ -53,7 +60,6 @@ export class CheckoutComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     // setup Stripe payment form
     this.setupStripePaymentForm();
-
   }
 
   ngOnInit(): void {
@@ -80,7 +86,8 @@ export class CheckoutComponent implements AfterViewInit {
         this.formBuilder.group({})
       ])
     });
-
+    //get cart items to show in order summary
+    this.cartItems = this.cartService.cartItems;
     // populate countries
 
     this.formService.getCountries().subscribe(
@@ -107,6 +114,7 @@ export class CheckoutComponent implements AfterViewInit {
         this.client_secret = paymentIntentResponse.client_secret;
         console.log(this.client_secret);
         this.elements = this.stripe.elements({ clientSecret: this.client_secret });
+
         console.log(this.elements);
         // Create a payment element ... and hide the zip-code field
         this.cardElement = this.elements.create('payment');
@@ -122,7 +130,6 @@ export class CheckoutComponent implements AfterViewInit {
         // Add an instance of shipping address UI component into the 'shipping-address' div
         this.shippingAddressElement.mount('#shipping-address');
 
-
         // Add event binding for the 'change' event on the card element
         this.cardElement.on('change', (event: any) => {
 
@@ -136,7 +143,6 @@ export class CheckoutComponent implements AfterViewInit {
             this.displayError.textContent = event.error.message;
           }
         });
-
       });
 
 
@@ -161,6 +167,11 @@ export class CheckoutComponent implements AfterViewInit {
     this.cartService.totalPrice.subscribe(
       (data) => {
         this.totalPrice = data;
+        this.extraFees = this.totalPrice * 0.10;
+        this.total = this.totalPrice + this.extraFees;
+        console.log(this.totalPrice);
+        console.log(this.extraFees);
+        console.log(this.total);
         // if(this.totalPrice < 1){
         //   this.router.navigateByUrl("/home");
         // }
@@ -179,7 +190,7 @@ export class CheckoutComponent implements AfterViewInit {
   showAddress() {
     this.shippingAddressElement.getValue().then(
       (data: any) => {
-        console.log(data.value.address);
+        console.log(data.value);
       }
     );
   }
@@ -198,12 +209,7 @@ export class CheckoutComponent implements AfterViewInit {
   //     this.billingAddressStates = [];
   //   }
   // }
-
-  onSubmit() {
-    if (this.checkoutFormGroup.invalid) {
-      this.checkoutFormGroup.markAllAsTouched();
-      return;
-    }
+  initializePurchase():Purchase {
     // set up order
     let order = new Order(this.totalQuantity, this.totalPrice);
 
@@ -214,68 +220,98 @@ export class CheckoutComponent implements AfterViewInit {
     // set up purchase
     let purchase = new Purchase();
 
-    // populate purchase - customer
+    // initiate purchase - customer
     purchase.customer = this.customer?.value;
+    // initiate purchase - recipient
+    purchase.recipient = new Recipient("");
     // populate purchase - order and orderItems
     purchase.order = order;
     purchase.orderItems = orderItems;
-     // populate purchase - billing address
-     purchase.billingAddress = new Address("", "", "", "", "");
+    // populate purchase - billing address
+    purchase.billingAddress = new Address("", "", "", "", "");
     // populate purchase - shipping address
     purchase.shippingAddress = new Address();
+    return purchase;
+  }
+  onSubmit() {
+    if (this.checkoutFormGroup.invalid) {
+      this.checkoutFormGroup.markAllAsTouched();
+      return;
+    }
+    let purchase = this.initializePurchase();
     this.shippingAddressElement.getValue().then(
       (data: any) => {
-        let address = data.value.address;
-        purchase.shippingAddress.country = address.country;
-        purchase.shippingAddress.state = address.state;
-        purchase.shippingAddress.city = address.city;
-        purchase.shippingAddress.zipCode = address.postal_code;
-        purchase.shippingAddress.street = address.line2 == null ?
-          address.line1 : address.line1 + ", " + address.line2;
-
+        this.populatePurchaseWithAddressInput(purchase, data);
         console.log(purchase);
         this.sendOrder(purchase);
       }
     );
 
-   
-
-    
+  }
+  populatePurchaseWithAddressInput(purchase: Purchase, data: any) {
+    let address = data.value.address;
+    let recipientName = data.value.name;
+    purchase.recipient.fullName = recipientName;
+    purchase.shippingAddress.country = address.country;
+    purchase.shippingAddress.state = address.state;
+    purchase.shippingAddress.city = address.city;
+    purchase.shippingAddress.zipCode = address.postal_code;
+    purchase.shippingAddress.street = address.line2 == null ?
+      address.line1 : address.line1 + ", " + address.line2;
   }
   sendOrder(purchase: Purchase) {
     this.checkoutService.purchaseEmitter.next(purchase);
     console.log(!this.checkoutFormGroup.invalid && this.displayError.textContent === "");
     if (!this.checkoutFormGroup.invalid && this.displayError.textContent === "") {
+      //disable button before api call
+      this.isDisabled = true;
       //sent to stripe
       this.stripe.confirmPayment({
-        elements: this.elements,
+        elements: this.elements
+        ,
+        redirect: 'if_required',
         confirmParams: {
+          payment_method_data: {
+            billing_details: {
+              name: `${purchase.customer.firstName} ${purchase.customer.lastName}`,
+              email: purchase.customer.email
+            }
+
+          },
+
           // Return URL where the customer should be redirected after the PaymentIntent is confirmed.
-          // return_url: 'https://localhost:4200/confirmation',
-        },
-        redirect: 'if_required'
+          return_url: 'https://localhost:4200/home',
+        }
+
       })
         .then((result: any) => {
           if (result.error) {
             // display error
             alert(`There was an error: ${result.error.message}`);
+            //set disabled to false to resubmit
+            this.isDisabled = false;
           }
           else {
             //call rest api to place order
             this.checkoutService.placeOrder(purchase).subscribe({
               next: (response: any) => {
-                this.checkoutService.getShippingRates(purchase).subscribe(
-                  (data) => {
-                    console.log(data);
-                  }
-                );
-                // alert(`Your order has been received. 
-                //     \nOrder tracking number: ${response.orderTrackingNumber}`);
+                // this.checkoutService.getShippingRates(purchase).subscribe(
+                //   (data) => {
+                //     console.log(data);
+                //   }
+                // );
+                alert(`Your order has been received. 
+                    \nOrder tracking number: ${response.orderTrackingNumber}`);
                 //reset cart
                 this.resetCart();
+                //enable button once api call completes
+                this.isDisabled = false;
+
               },
               error: (err: any) => {
                 alert(`There was an error: ${err.message}`);
+                //enable button once api call completes
+                this.isDisabled = false;
               }
             });
           }
@@ -294,6 +330,7 @@ export class CheckoutComponent implements AfterViewInit {
     this.cartService.cartItems = [];
     this.cartService.totalPrice.next(0);
     this.cartService.totalQuantity.next(0);
+    this.cartService.updateStorage();
 
     // reset the form
     this.checkoutFormGroup.reset();

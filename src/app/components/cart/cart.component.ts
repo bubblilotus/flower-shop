@@ -49,5 +49,8 @@ export class CartComponent {
   remove(theCartItem: CartItem) {
     this.cartService.remove(theCartItem);
   }
+  close(){
+    this.cartService.close();
+  }
 
 }

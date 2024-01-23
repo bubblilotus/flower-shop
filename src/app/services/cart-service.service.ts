@@ -6,6 +6,8 @@ import { BehaviorSubject, Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class CartServiceService {
+  open = new Subject<boolean>();
+  storage = localStorage;
   isEmpty() {
       return this.cartItems.length < 1 || this.cartItems == undefined;
   }
@@ -17,7 +19,12 @@ export class CartServiceService {
 
   
 
-  constructor() { }
+  constructor() { 
+    let storageItems = this.storage.getItem('cartItems');
+    if(storageItems != null && storageItems != undefined){
+        this.cartItems = JSON.parse(storageItems);
+    }
+  }
 
   addToCart(theCartItem: CartItem) {
 
@@ -46,6 +53,10 @@ export class CartServiceService {
 
     // compute cart total price and total quantity
     this.computeCartTotals();
+    this.updateStorage();
+  }
+  updateStorage(){
+    this.storage.setItem('cartItems', JSON.stringify(this.cartItems));
   }
 
   computeCartTotals() {
@@ -88,6 +99,7 @@ export class CartServiceService {
     else {
       this.computeCartTotals();
     }
+    this.updateStorage();
   }
 
   remove(theCartItem: CartItem) {
@@ -101,5 +113,9 @@ export class CartServiceService {
 
       this.computeCartTotals();
     }
+    this.updateStorage();
+  }
+  close(){
+    this.open.next(false);
   }
 }

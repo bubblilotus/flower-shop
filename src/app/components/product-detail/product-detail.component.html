@@ -1,6 +1,23 @@
-<app-topbar></app-topbar>
-<div class="product-detail-wrapper">
-  <mat-card class="detail-card">
+<div class="detail-wrapper">
+  <div class="image-container">
+    <img src={{product.imageUrl}}>
+  </div>
+  <div class="info-container">
+    <div class="title">{{product.name}}</div>
+    <div class="price">{{product.unitPrice | currency:'USD'}}</div>
+    <div class="description">{{product.description}}</div>
+    <button (click) = "addToCart(product)"
+    mat-raised-button
+    [disabled] = 'product.unitsInStock != undefined && product.unitsInStock < 1'>
+    <span class="button-text">ADD TO CART</span>
+  </button>
+  <div class="outofstockMessage"
+  *ngIf = 'product.unitsInStock != undefined && product.unitsInStock < 1'>
+    This product is currently sold out.
+  </div>
+
+  </div>
+  <!-- <mat-card class="detail-card">
     <mat-card-header class="title">{{product.name}}</mat-card-header>
     <mat-card-content class="card-section">
         <div class="description">
@@ -11,8 +28,8 @@
     <mat-card-actions class="card-section">
       <button (click) = "addToCart(product)"
       mat-raised-button>ADD TO CART</button>
-    </mat-card-actions>
-    <mat-accordion>
+    </mat-card-actions> -->
+    <!-- <mat-accordion>
         <mat-expansion-panel (opened)="panelOpenState = true"
                              (closed)="panelOpenState = false">
           <mat-expansion-panel-header>
@@ -31,7 +48,7 @@
           </mat-expansion-panel-header>
           <p>{{product.meaning}}</p>
         </mat-expansion-panel>
-      </mat-accordion>
-</mat-card>
+      </mat-accordion> -->
+<!-- </mat-card> -->
 </div>
 

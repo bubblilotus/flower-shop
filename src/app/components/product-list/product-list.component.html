@@ -1,21 +1,32 @@
 <div class="products">
-  <div class="cards">
-    <mat-card 
-  *ngFor = "let product of products"
-  class="example-card">
-      <img (click) = "openDetails(product.id)"
-      class="card-section image" src={{product.imageUrl}} alt="Photo of a Shiba Inu">
-      <mat-card-content (click) = "openDetails(product.id)"
-      class="card-section">
-        <div class="title">{{product.name}}</div>
-        <div class="price">{{product.unitPrice}}</div>
-      </mat-card-content>
-      <mat-card-actions class="card-section">
-        <button mat-raised-button>ADD TO CART</button>
-      </mat-card-actions>
-  </mat-card>
+  <div class="result-text" 
+  *ngIf = "searchMode">
+    <p *ngIf = "products.length < 1">Sorry, we could not find products for "{{previousKeyword}}"</p>
+    <p *ngIf = "products.length >= 1">{{totalElements}} products found for "{{previousKeyword}}"</p>
+    <hr>
   </div>
-  <mat-paginator #paginator (page) = "onChangePage($event)"
+  <div class="cards">
+      <mat-card
+      *ngFor = "let product of products"
+      [ngClass]="{'outofstock': product.unitsInStock != undefined && product.unitsInStock < 1}"
+      >
+          <img (click) = "openDetails(product.id)"
+          class="card-section image" 
+          src={{product.imageUrl}} alt="Photo of a Shiba Inu">
+          <mat-card-content (click) = "openDetails(product.id)"
+          class="card-section">
+            <div class="title" (click) = "openDetails(product.id)">{{product.name}}</div>
+            <div class="price" (click) = "openDetails(product.id)">{{product.unitPrice}}</div>
+          </mat-card-content>
+          <mat-card-actions class="card-section">
+            <button mat-raised-button>ADD TO CART</button>
+          </mat-card-actions>
+      </mat-card>
+    
+  </div>
+  <mat-paginator 
+  *ngIf = "products.length > 5"
+  #paginator (page) = "onChangePage($event)"
   [length]="totalElements"
                 [pageSize]="pageSize"
                 [pageSizeOptions]="[5, 10, 20]"

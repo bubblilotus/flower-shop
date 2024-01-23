@@ -1,10 +1,10 @@
-import { Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { MatIconRegistry } from '@angular/material/icon';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { CartServiceService } from '../services/cart-service.service';
 import { Observable, Subject } from 'rxjs';
 import { ProductService } from '../services/product.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavService } from '../services/sidenav.service';
 
 @Component({
@@ -12,12 +12,14 @@ import { SidenavService } from '../services/sidenav.service';
   templateUrl: './topbar.component.html',
   styleUrls: ['./topbar.component.css']
 })
-export class TopbarComponent implements OnInit{
+export class TopbarComponent implements OnInit, AfterViewInit{
   isSticky: boolean = false;
   opened = false;
+  cartOpen = false;
   searchOpened = false;
   searchMode = false;
-  value = "";
+  value = '';
+  keyword!: string;
   path = '/assets/images/icons';
   cartCount = 0;
   menuPosition: number = 0;
@@ -27,19 +29,30 @@ export class TopbarComponent implements OnInit{
 image: any = "/assets/images/slides/bouquet.jpg";
   sticky: boolean = false;
   elementPosition: any;
+  showSearchBar!: boolean;
  
   constructor(
     private domSanitizer: DomSanitizer,
     public matIconRegistry: MatIconRegistry, private cartService: CartServiceService,
     private sidenavService: SidenavService,
-    private productService: ProductService, private router: Router) {
+    private productService: ProductService, 
+    private route: ActivatedRoute,
+    private router: Router) {
     this.matIconRegistry
       .addSvgIcon('search', this.setPath(`${this.path}/search.svg`))
       .addSvgIcon('person', this.setPath(`${this.path}/person.svg`))
       .addSvgIcon('bag', this.setPath(`${this.path}/bag.svg`))
       .addSvgIcon('menu', this.setPath(`${this.path}/menu.svg`));
   }
+  toggleSearchBar() {
+    this.showSearchBar = !this.showSearchBar;
+  }
   ngOnInit(): void {
+    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+    this.showSearchBar = this.searchMode;
+    this.route.paramMap.subscribe(params => {
+      this.value = params.get('keyword') as string;
+    });
     this.cartService.totalQuantity.subscribe(
       (data) => {
         this.cartCount = data;
@@ -56,13 +69,20 @@ image: any = "/assets/images/slides/bouquet.jpg";
         this.opened = data;
       }
     );
+    this.cartService.open.subscribe(
+        (data) => {
+          this.cartOpen = data;
+        }
+    );
+    
   }
   search(value: any){
     let searchUrl = "/products/search/"
     this.router.navigateByUrl(searchUrl + value);
   }
   ngAfterViewInit(){
-    this.elementPosition = this.menuElement.nativeElement;
+    // this.elementPosition = this.menuElement.nativeElement;
+
   }
   private setPath(url: string): SafeResourceUrl {
     return this.domSanitizer.bypassSecurityTrustResourceUrl(url);
@@ -70,7 +90,7 @@ image: any = "/assets/images/slides/bouquet.jpg";
   @HostListener('window:scroll', ['$event'])
     handleScroll(){
         const windowScroll = window.pageYOffset;
-        if(windowScroll >= this.menuPosition + 10){
+        if(windowScroll >= this.menuPosition + 25){
             this.isSticky = true;
         } else {
             this.isSticky = false;

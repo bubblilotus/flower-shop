@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="quantity">
-                    {{ item.quantity }}
+                    <h2>{{ item.quantity }}</h2>
                 </div>
 
                 <div class="quantity-button">
@@ -24,13 +24,11 @@
                 </div>
             </div>
             <div class="delete">
-                <button mat-button class="delete-button">Delete</button>
+                <button mat-button class="delete-button"
+                (click) = "remove(item)">Delete</button>
             </div>
         </div>
     </div>
 </div>
 <div class="total"><div>Total</div> <div>{{totalPrice}}</div></div>
 <div class="gift-message">message box here</div>
-<div class="cart-action">
-    <button mat-flat-button routerLink = "/checkout">proced to payment</button>
-</div>

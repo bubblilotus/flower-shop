@@ -31,6 +31,9 @@ import { OccasionSidenavComponent } from './components/occasion-sidenav/occasion
 import { FullProductListComponent } from './components/full-product-list/full-product-list.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { OccasionListComponent } from './components/occasion-list/occasion-list.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { PoliciesComponent } from './components/policies/policies.component';
+import { AboutComponent } from './components/about/about.component';
 
 
 
@@ -47,6 +50,9 @@ import { OccasionListComponent } from './components/occasion-list/occasion-list.
     FullProductListComponent,
     CheckoutComponent,
     OccasionListComponent,
+    FooterComponent,
+    PoliciesComponent,
+    AboutComponent,
   ],
   imports: [
     BrowserModule,
