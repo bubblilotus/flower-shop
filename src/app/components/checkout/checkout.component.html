@@ -45,13 +45,10 @@
                     <button mat-button matStepperNext class="next-button" type="button">Next</button>
                 </div>
             </mat-step>
-            <mat-step formGroupName="1" [stepControl]="formArray?.get([1])!">
+            <mat-step formGroupName="1" [stepControl]="formArray?.get([1])!" class="address-step">
                 <ng-template matStepLabel>Recipient Shipping Information</ng-template>
                 <div class="form-area" id="shipping-address">
                     <div id="shipping-address"></div>
-                    <div id="address-errors">
-
-                    </div>
                 </div>
                 <div>
                     <button mat-button matStepperPrevious type="button">Back</button>
@@ -93,12 +90,14 @@
     </div>
 
     <div class="totals">
-        <div><span>Order subtotal</span><span>{{totalPrice}}</span></div>
-        <div><span>Taxes & fees</span><span>{{extraFees}}</span></div>
+        <div><span>Order subtotal</span><span>{{totalPrice | currency:'USD':true:'1.2-2'}}</span></div>
+        <div><span>Taxes & fees</span><span>{{extraFees | currency:'USD':true:'1.2-2'}}</span></div>
         <div><span>Delivery</span><span>FREE</span></div>
-        <div class="total"><span>Total</span><span>{{total}}</span></div>
+        <div class="total"><span>Total</span><span>{{total | currency:'USD':true:'1.2-2'}}</span></div>
     </div>
     <div class="place-order">
-        <button mat-flat-button color="primary">Place Order</button>
+        <button mat-flat-button
+        [disabled]="!customerValid || !paymentValid || !addressValid"
+        (click) = "onSubmit()">Place Order</button>
     </div>
 </div>

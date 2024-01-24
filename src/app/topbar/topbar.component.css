@@ -3,7 +3,34 @@
     height: fit-content;
     position: relative;
 }
-.bg-image{
+
+.marquee {
+    width: 100%;
+    height: 1.5em;
+    overflow: hidden;
+    white-space: nowrap;
+    background-color: #1e1e1e;
+}
+
+.marquee h4 {
+    display: inline-block;
+    padding-left: 100%;
+    animation: marquee 25s linear infinite;
+    color: #fffff7;
+    font-size: .9em;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-160%);
+    }
+}
+
+.bg-image {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -25,8 +52,10 @@ mat-toolbar {
     flex-direction: column;
     background: #fffff5 !important;
     color: #1e1e1e !important;
+    padding: 0;
 }
-.main-nav{
+
+.main-nav {
     width: 100%;
     height: 100%;
     display: flex;
@@ -59,27 +88,36 @@ mat-toolbar {
     align-items: center;
     padding-top: .5em;
 }
-.left-nav{
+
+.left-nav {
     width: 20%;
     display: flex;
     justify-content: center;
 }
-.right-nav{
+
+.right-nav {
     width: 20%;
     padding-right: 1em;
 }
-.center-nav{
+
+.center-nav {
     width: 55%;
     display: flex;
     align-content: center;
     justify-content: center;
 }
-a{
+
+a {
     text-decoration: none;
 }
-a, a:active, a:focus, a:visited{
+
+a,
+a:active,
+a:focus,
+a:visited {
     color: #1e1e1e;
 }
+
 .brand {
     font-weight: 800;
     text-transform: uppercase;
@@ -88,11 +126,12 @@ a, a:active, a:focus, a:visited{
     justify-self: center;
 }
 
-.title{
+.title {
     font-size: 1.5em;
     text-align: center;
 }
-.subtitle{
+
+.subtitle {
     font-size: 1em;
     text-align: center;
 }
@@ -127,10 +166,12 @@ button.account-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-b
     padding: .5em;
     padding-top: 1em;
 }
-.search-nav{
+
+.search-nav {
     height: 100%;
 }
-.search-line{
+
+.search-line {
     width: 100%;
     display: flex;
     justify-content: space-around;
@@ -144,7 +185,8 @@ button.account-button.mdc-icon-button.mat-mdc-icon-button.mat-unthemed.mat-mdc-b
 .mat-mdc-form-field {
     max-width: 100%;
 }
-mat-form-field{
+
+mat-form-field {
     width: 100%;
     font-size: 1em;
 }
@@ -164,18 +206,22 @@ mat-form-field{
 .mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
     padding: 0;
 }
-.mat-mdc-icon-button .mat-mdc-button-ripple{
+
+.mat-mdc-icon-button .mat-mdc-button-ripple {
     display: none !important;
 }
-#drawer{
+
+#drawer {
     height: 100%;
 }
-.cart-nav{
+
+.cart-nav {
     width: 100%;
     height: 100%;
     padding: 0 1em
 }
-.cart-header{
+
+.cart-header {
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -185,7 +231,8 @@ mat-form-field{
     z-index: 6;
     padding: 0 1em;
 }
-.sticky{
+
+.sticky {
     position: fixed;
     top: 0;
     overflow: hidden;
@@ -193,38 +240,47 @@ mat-form-field{
     transition: background-color .2s;
     transition-delay: -1s;
 }
-.sticky a:active,.sticky a:focus,.sticky a:visited, .sticky a{
+
+.sticky a:active,
+.sticky a:focus,
+.sticky a:visited,
+.sticky a {
     color: #1e1e1e;
 }
 
-.mat-icon.black-icon svg path{
+.mat-icon.black-icon svg path {
     color: #1e1e1e;
     stroke: #1e1e1e;
     stroke-width: 2;
 }
-.mat-icon.notranslate.mat-badge.white-icon.mat-badge-warn.mat-icon-no-color.mat-badge-overlap.mat-badge-above.mat-badge-after.mat-badge-medium.black-icon path{
+
+.mat-icon.notranslate.mat-badge.white-icon.mat-badge-warn.mat-icon-no-color.mat-badge-overlap.mat-badge-above.mat-badge-after.mat-badge-medium.black-icon path {
     stroke: #1e1e1e;
 }
-.search-open{
+
+.search-open {
     height: 8em !important;
 }
-.cart-nav{
+
+.cart-nav {
     width: 100%;
     min-height: 100vh;
 }
-.cart-action{
+
+.cart-action {
     width: 100%;
     position: fixed;
     bottom: 0;
     right: 0;
 }
-.cart-action button{
+
+.cart-action button {
     width: 100%;
     background-color: black;
 
 }
-.button-text{
+
+.button-text {
     color: white;
     font-size: 1.2em;
 }
-

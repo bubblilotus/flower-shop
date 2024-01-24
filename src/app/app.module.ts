@@ -34,6 +34,7 @@ import { OccasionListComponent } from './components/occasion-list/occasion-list.
 import { FooterComponent } from './components/footer/footer.component';
 import { PoliciesComponent } from './components/policies/policies.component';
 import { AboutComponent } from './components/about/about.component';
+import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 
 
 
@@ -53,6 +54,7 @@ import { AboutComponent } from './components/about/about.component';
     FooterComponent,
     PoliciesComponent,
     AboutComponent,
+    OrderConfirmationComponent,
   ],
   imports: [
     BrowserModule,

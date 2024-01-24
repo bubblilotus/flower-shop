@@ -22,6 +22,9 @@ import { FormValidator } from 'src/app/validators/form-validator';
   styleUrls: ['./checkout.component.css']
 })
 export class CheckoutComponent implements AfterViewInit {
+  paymentValid: boolean = false;
+  customerValid: boolean = false;
+  addressValid: boolean = false;
   checkoutFormGroup!: FormGroup;
   extraFees: any;
   total: any;
@@ -61,6 +64,14 @@ export class CheckoutComponent implements AfterViewInit {
     // setup Stripe payment form
     this.setupStripePaymentForm();
   }
+  customerValidCheck() {
+    this.checkoutFormGroup.get('formArray')?.get([0])?.statusChanges.subscribe(
+      (status) => {
+        console.log("customer form status: " + status);
+        this.customerValid = status === 'VALID' ? true : false;
+      }
+    );
+  }
 
   ngOnInit(): void {
 
@@ -96,6 +107,8 @@ export class CheckoutComponent implements AfterViewInit {
         this.countries = data;
       }
     );
+
+    this.customerValidCheck();
   }
   mountBilling() {
     this.shippingAddressElement.unmount();
@@ -138,11 +151,35 @@ export class CheckoutComponent implements AfterViewInit {
 
           if (event.complete) {
             this.displayError.textContent = "";
+            this.paymentValid = true;
           } else if (event.error) {
             // show validation error to customer
             this.displayError.textContent = event.error.message;
+            this.paymentValid = false;
+          } else {
+            this.paymentValid = false;
           }
         });
+        this.shippingAddressElement.on('change', (event: any) => {
+          console.log(event);
+          console.log(event.complete);
+          if (event.complete) {
+            this.addressValid = true;
+            this.addressWithinLimits();
+          } else {
+            this.addressValid = false;
+          }
+          // get a handle to card-errors element
+          //this.displayError = document.getElementById('card-errors');
+
+          // if (event.complete) {
+          //   this.displayError.textContent = "";
+          // } else if (event.error) {
+          //   // show validation error to customer
+          //   this.displayError.textContent = event.error.message;
+          // }
+        });
+
       });
 
 
@@ -193,6 +230,34 @@ export class CheckoutComponent implements AfterViewInit {
         console.log(data.value);
       }
     );
+    //this.addressInNC();
+  }
+  addressWithinLimits() {
+    this.shippingAddressElement.getValue().then(
+      (data: any) => {
+        let address = data.value.address;
+        if (!this.addressInUs(address)) {
+          this.addressValid = false;
+          console.log("OUT OF COUNTRY");
+          alert("Out of country. We only deliver to addresses in the US.");
+        } else {
+          if (!this.addressInNC(address)) {
+            this.addressValid = false;
+            console.log("OUT OF STATE");
+            alert("Out of state. We only deliver to addresses in the state of North Carolina.");
+          }
+        }
+      }
+    );
+  }
+  addressInUs(address: any): boolean {
+    return address.country == 'US' ? true : false;
+  }
+  addressInNC(address: any): boolean {
+    return address.state == 'NC' ? true : false;
+    if (address.state != 'NC') {
+
+    }
   }
   // copyShippingAddressToBillingAddress(checked: boolean) {
   //   if (checked) {
@@ -209,9 +274,9 @@ export class CheckoutComponent implements AfterViewInit {
   //     this.billingAddressStates = [];
   //   }
   // }
-  initializePurchase():Purchase {
+  initializePurchase(): Purchase {
     // set up order
-    let order = new Order(this.totalQuantity, this.totalPrice);
+    let order = new Order(this.totalQuantity, this.total);
 
     // get cart items
     const cartItems = this.cartService.cartItems;
@@ -300,10 +365,11 @@ export class CheckoutComponent implements AfterViewInit {
                 //     console.log(data);
                 //   }
                 // );
-                alert(`Your order has been received. 
-                    \nOrder tracking number: ${response.orderTrackingNumber}`);
+                // alert(`Your order has been received. 
+                //     \nOrder tracking number: ${response.orderTrackingNumber}`);
                 //reset cart
                 this.resetCart();
+                this.router.navigateByUrl(`confirmation/${response.orderTrackingNumber}`);
                 //enable button once api call completes
                 this.isDisabled = false;
 

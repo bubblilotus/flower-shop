@@ -68,9 +68,14 @@ mat-sidenav-content{
 app-policies{
   background-color: #fffff1;
 }
-app-checkout{
+app-checkout, app-order-confirmation{
   min-height: 100vh;
 }
+.mat-vertical-content {
+  padding: 1em !important;
+}
+
+
 /* screen sizes */
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {

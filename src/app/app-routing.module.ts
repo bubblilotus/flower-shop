@@ -7,6 +7,7 @@ import { CheckoutComponent } from './components/checkout/checkout.component';
 import { CartGuard } from './guards/cart-guard';
 import { PoliciesComponent } from './components/policies/policies.component';
 import { AboutComponent } from './components/about/about.component';
+import { OrderConfirmationComponent } from './components/order-confirmation/order-confirmation.component';
 
 const routes: Routes = [
   {path: 'products/:id', component: ProductDetailComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent}, 
   {path: 'policies', component: PoliciesComponent},
   {path: 'about', component: AboutComponent},
+  {path: 'confirmation/:trackingNumber', component: OrderConfirmationComponent},
   {
     path: 'checkout',
     component: CheckoutComponent,

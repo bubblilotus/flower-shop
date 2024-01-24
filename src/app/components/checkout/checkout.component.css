@@ -2,6 +2,9 @@
     min-height: 100vh;
     background-color: #fffff1;
 }
+.address-step .form-area{
+    height: 50vh;
+}
 
 .reviewItems {
     width: 100%;
@@ -73,6 +76,6 @@
     font-size: 1.25em;
 }
 .place-order button:disabled{
-    /* background-color: rgb(246, 247, 248); */
-    /* color: rgb(199, 200, 205); */
+    background-color: rgb(246, 247, 248);
+    color: rgb(199, 200, 205);
 }
