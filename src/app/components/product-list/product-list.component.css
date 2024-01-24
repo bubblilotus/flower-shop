@@ -55,6 +55,22 @@ mat-card-content{
 .price{
     text-align: center;
 }
+.sold-out{
+    font-size: 1em;
+    text-align: center;
+    color: red;
+}
+.sold-out-overlay {
+    position: absolute;
+    bottom: 7em;
+    left: 0;
+    right: 0;
+    /* background-color: #E3E3E3; */
+    padding: .5em;
+  }
+  .sold-out-overlay h3{
+    color: #EA6048;
+  }
 .image{
     /* background-image: url("/assets/images/slides/bouquet.jpg");  */
     height: 20vh;

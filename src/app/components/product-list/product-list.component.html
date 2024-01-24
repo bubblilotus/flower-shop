@@ -7,12 +7,16 @@
   </div>
   <div class="cards">
       <mat-card
-      *ngFor = "let product of products"
-      [ngClass]="{'outofstock': product.unitsInStock != undefined && product.unitsInStock < 1}"
-      >
+      *ngFor = "let product of products">
           <img (click) = "openDetails(product.id)"
           class="card-section image" 
+          [ngClass]="{'outofstock': product.unitsInStock != undefined && product.unitsInStock < 1}"
           src={{product.imageUrl}} alt="Photo of a Shiba Inu">
+          <div class="sold-out-overlay"
+          *ngIf = "product.unitsInStock != undefined && product.unitsInStock < 1">
+            <h3>SOLD OUT</h3>
+          </div>
+        
           <mat-card-content (click) = "openDetails(product.id)"
           class="card-section">
             <div class="title" (click) = "openDetails(product.id)">{{product.name}}</div>

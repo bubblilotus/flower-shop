@@ -54,6 +54,9 @@ export class CheckoutComponent implements AfterViewInit {
   displayError: any = "";
   client_secret: string = "";
   elements: any;
+
+  static hasCompletedCheckout: boolean = false;
+
   constructor(private formBuilder: FormBuilder,
     private formService: FormServiceService,
     private cartService: CartServiceService,
@@ -369,6 +372,7 @@ export class CheckoutComponent implements AfterViewInit {
                 //     \nOrder tracking number: ${response.orderTrackingNumber}`);
                 //reset cart
                 this.resetCart();
+                CheckoutComponent.hasCompletedCheckout = true;
                 this.router.navigateByUrl(`confirmation/${response.orderTrackingNumber}`);
                 //enable button once api call completes
                 this.isDisabled = false;
